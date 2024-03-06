@@ -1,0 +1,90 @@
+* {
+  /* margin: 0px; */
+  font-family: "Roboto", sans-serif;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  background-color: rgb(167, 200, 255);
+  height: 80px;
+  max-width: 80px;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex: 1;
+}
+
+.back-button img {
+  width: 30px;
+  padding: 20px;
+  margin-top: -5px;
+  cursor: pointer;
+}
+.device-time-selection {
+  flex: 12;
+  background-color: rgb(167, 200, 255);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border-radius: 50px;
+  padding: 20px 0px 20px 100px;
+  width: 1360px;
+  height: 40px;
+  margin-right: -50px;
+}
+
+.form-input label {
+  font-weight: bold;
+  margin-left: 30px;
+}
+
+.form-input input {
+  border: none;
+  height: 35px;
+  width: 100px;
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.form-input input:focus {
+  outline: none;
+}
+
+.form-input select {
+  border: none;
+  height: 35px;
+  width: 400px;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-right: 80px;
+  margin-left: 10px;
+}
+
+.form-input select:focus {
+  outline: none;
+}
+
+.submit-button button {
+  margin-left: 50px;
+  cursor: pointer;
+  width: 150px;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(14, 91, 174);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button button:hover {
+  background-color: rgb(5, 64, 127);
+}

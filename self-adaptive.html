@@ -1,0 +1,53 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./scripts/plot-charts.js"
+      defer
+    ></script>
+    <link rel="stylesheet" href="./styles/self-adaptive.css" />
+  </head>
+  <body>
+    <div class="page-header">
+      <div class="back-button"><a href="./index.html"><img src="./img/home.png" alt=""></a></div>
+
+      <form>
+        <div class="device-time-selection">
+          <div class="form-input">
+            <label class>Device :</label>
+            <select id="device" class="applience-dropdwon">
+              <option disabled selected value="">Select a device</option>
+              <option value="fridge">Fridge</option>
+              <option value="washing-machine">Washing Machine</option>
+              <option value="dish-washer">Dish Washer</option>
+            </select>
+          </div>
+
+          <div class="form-input">
+            <label>From :</label>
+            <input id="from" type="number" min="0" step="1" />
+          </div>
+
+          <div class="form-input">
+            <label>To :</label>
+            <input id="to" type="number" min="0" step="1" />
+          </div>
+
+          <div class="submit-button">
+            <button type="button" onclick="submitForm()">View Data</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="graph" id="line_top_x"></div>
+    <script src="./scripts/self-adaptive.js"></script>
+  </body>
+</html>

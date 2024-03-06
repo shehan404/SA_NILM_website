@@ -7,17 +7,19 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
     />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
   </head>
   <body>
-
     <div class="hero-section">
       <h1 class="page-title">Self-Adaptive Non-Intrusive Load Monitoring</h1>
-      <p>A self-adaptive approach for effective load monitoring and optimizing energy management</p>
+      <p>
+        A self-adaptive approach for effective load monitoring and optimizing
+        energy management
+      </p>
 
       <div class="arrow-container">
         <div class="arrow"></div>
-    </div>
+      </div>
     </div>
 
     <div class="options-section">
@@ -28,6 +30,8 @@
             class="section-cardImageElement"
           />
         </div>
+
+        <!-- Total Power Consumptions of Appliances-->
         <div class="section-description">
           <h3 class="section-descriptionTitle">
             Total Power Consumptions of Appliances
@@ -40,10 +44,11 @@
           </p>
         </div>
         <div class="section-button">
-          <button class="section-buttonelement">View Data</button>
+          <button class="section-buttonelement" id="total-power-card-button">View Data</button>
         </div>
       </div>
 
+      <!-- Compare Power Consumptions of Appliances -->
       <div class="section-card">
         <div class="section-cardImage">
           <img
@@ -63,10 +68,11 @@
           </p>
         </div>
         <div class="section-button">
-          <button class="section-buttonelement">View Data</button>
+          <button class="section-buttonelement" id="compare-power-button">View Data</button>
         </div>
       </div>
 
+      <!-- NILM Model -->
       <div class="section-card">
         <div class="section-cardImage">
           <img src="./img/breakdown.png" class="section-cardImageElement" />
@@ -81,10 +87,11 @@
           </p>
         </div>
         <div class="section-button">
-          <button class="section-buttonelement">View Data</button>
+          <button class="section-buttonelement" id="nilm-model-button">View Data</button>
         </div>
       </div>
 
+      <!-- Self Adaptive NILM Model -->
       <div class="section-card">
         <div class="section-cardImage">
           <img src="./img/utility.png" class="section-cardImageElement" />
@@ -99,9 +106,11 @@
           </p>
         </div>
         <div class="section-button">
-          <button class="section-buttonelement">View Data</button>
+          <button class="section-buttonelement" id="self-adaptive-button">View Data</button>
         </div>
       </div>
     </div>
+
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
