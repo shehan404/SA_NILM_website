@@ -1,10 +1,48 @@
 .graph{
-  border: 2px solid rgb(174, 174, 174);
-  /* display: flex;
+  display: flex;
+  /* border: 2px solid rgb(174, 174, 174); */
+  /* padding: 20px;
+  margin-bottom: 20px;
   justify-content: center;
-  align-items: center;
-  padding: 20px; */
+  color: rgb(104, 104, 104); */
+
+}
+
+.graph-container {
+  border: 2px solid rgb(174, 174, 174);
   padding: 20px;
   margin-bottom: 20px;
-  /* background-color: rgb(239, 239, 239); */
+  border-radius: 5px;
+}
+
+.graph-summery{
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title{
+  margin-bottom: 20px;
+}
+
+.energy-usage-container{
+  display: flex;
+}
+
+.energy-usage{
+  
+  color: rgb(73, 73, 73);
+  font-size: 14px;
+  margin: 0px 0px 15px 34px;
+  border: 1px solid rgb(212, 212, 212);
+  padding: 4px 6px;
+  border-radius: 6px;
+  width: fit-content;
+  
+}
+
+
+
+.energy-usage-value{
+  color: rgb(27, 195, 27);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

@@ -84,9 +84,9 @@ function drawAggregateChart(dataToPlot, startIndex, device) {
   dataAgg.addRows(mapAggregateDataToPlot(dataToPlot, startIndex));
 
   var options = {
-    chart: {
-      title: `Aggregated power`,
-    },
+    // chart: {
+    //   title: `Aggregated power`,
+    // },
     width: 1400,
     height: 400,
     axes: {
@@ -110,6 +110,12 @@ function drawAggregateChart(dataToPlot, startIndex, device) {
     document.getElementById("aggregate-chart")
   );
   chartAgg.draw(dataAgg, google.charts.Line.convertOptions(options));
+
+
+  const chartSummery = document.getElementById("aggregate-chart-summery");
+  const summetyContent = `<div class="chart-title">Aggregated power</div>`;
+
+  chartSummery.innerHTML = summetyContent;
 
 
 }

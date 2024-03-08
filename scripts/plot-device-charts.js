@@ -1,3 +1,7 @@
+// fetchDataAndDrawDeviceChart(1000, 2000, "fridge", 3);
+
+
+
 function fetchDeviceData(url) {
   return fetch(url)
     .then((response) => {
@@ -45,6 +49,26 @@ function fetchDataAndDrawDeviceChart(startIndex, endIndex, device, year) {
     });
 }
 
+function calculateGraphArea(dataArray) {
+  const traget_array = dataArray[0].map((element) => element * 6);
+  const Predicted_array = dataArray[1].map((element) => element * 6);
+
+  const tragetUsage =
+    traget_array.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+    ) /
+    (3600 * 1000);
+  const PredictedUsage =
+    Predicted_array.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+    ) /
+    (3600 * 1000);
+
+  return [tragetUsage.toFixed(4), PredictedUsage.toFixed(4)];
+}
+
 function mapDeviceDataToPlot(arrayOfData, startIndex) {
   if (
     Array.isArray(arrayOfData) &&
@@ -56,7 +80,7 @@ function mapDeviceDataToPlot(arrayOfData, startIndex) {
       value,
       arrayOfData[1][index],
     ]);
-    console.log(rowsOfData);
+    // console.log(rowsOfData);
     return rowsOfData;
   } else {
     console.log("Invalid input or empty array");
@@ -66,7 +90,7 @@ function mapDeviceDataToPlot(arrayOfData, startIndex) {
 google.charts.load("current", { packages: ["line"] });
 // google.charts.setOnLoadCallback(drawDeviceChart);
 function drawDeviceChart(dataToPlot, startIndex, device) {
-  console.log("dat to plot", dataToPlot);
+  // console.log("dat to plot", dataToPlot);
 
   var data = new google.visualization.DataTable();
 
@@ -74,14 +98,12 @@ function drawDeviceChart(dataToPlot, startIndex, device) {
   data.addColumn("number", "Target");
   data.addColumn("number", "Prediction");
 
-  
- 
   data.addRows(mapDeviceDataToPlot(dataToPlot, startIndex));
 
   var options = {
-    chart: {
-      title: `Power consumption of ${device}`,
-    },
+    // chart: {
+    //   title: `Power consumption of ${device}`,
+    // },
     width: 1400,
     height: 400,
     axes: {
@@ -104,7 +126,16 @@ function drawDeviceChart(dataToPlot, startIndex, device) {
   var chart = new google.charts.Line(document.getElementById("device-chart"));
   chart.draw(data, google.charts.Line.convertOptions(options));
 
+  const [targetUsage, PredictedUsage] = calculateGraphArea(dataToPlot);
+  console.log(targetUsage, PredictedUsage);
+  const chartSummery = document.getElementById("device-chart-summery");
+  const summetyContent = `<div class="chart-title">Power consumption of ${device}</div>
+  <div class="energy-usage-container">
+  <div class="energy-usage" >Target Energy Usage: <span class="energy-usage-value">${targetUsage}</span> kWh</div>
+  <div class="energy-usage" >Predicted Energy Usage: <span class="energy-usage-value">${PredictedUsage}</span> kWh</div>
+  </div>`;
 
+  chartSummery.innerHTML = summetyContent;
 }
 
 window.fetchDataAndDrawDeviceChart = fetchDataAndDrawDeviceChart;
