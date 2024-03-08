@@ -66,7 +66,9 @@ function calculateGraphArea(dataArray) {
     ) /
     (3600 * 1000);
 
-  return [tragetUsage.toFixed(4), PredictedUsage.toFixed(4)];
+  const usageAccuracy =  100-Math.abs(((PredictedUsage-tragetUsage)/tragetUsage)*100);  //ACT-PRED/ACT
+
+  return [tragetUsage.toFixed(4), PredictedUsage.toFixed(4), usageAccuracy.toFixed(2)];
 }
 
 function mapDeviceDataToPlot(arrayOfData, startIndex) {
@@ -126,13 +128,14 @@ function drawDeviceChart(dataToPlot, startIndex, device) {
   var chart = new google.charts.Line(document.getElementById("device-chart"));
   chart.draw(data, google.charts.Line.convertOptions(options));
 
-  const [targetUsage, PredictedUsage] = calculateGraphArea(dataToPlot);
+  const [targetUsage, PredictedUsage, usageAccuracy] = calculateGraphArea(dataToPlot);
   console.log(targetUsage, PredictedUsage);
   const chartSummery = document.getElementById("device-chart-summery");
   const summetyContent = `<div class="chart-title">Power consumption of ${device}</div>
   <div class="energy-usage-container">
   <div class="energy-usage" >Target Energy Usage: <span class="energy-usage-value">${targetUsage}</span> kWh</div>
   <div class="energy-usage" >Predicted Energy Usage: <span class="energy-usage-value">${PredictedUsage}</span> kWh</div>
+  <div class="energy-usage" >Accuracy: <span class="energy-usage-value">${usageAccuracy}</span> %</div>
   </div>`;
 
   chartSummery.innerHTML = summetyContent;

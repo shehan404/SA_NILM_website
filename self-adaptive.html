@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Self-Adaptive NILM Model</title>
 
     <script
       type="text/javascript"
@@ -13,11 +13,19 @@
     <link rel="stylesheet" href="./styles/graph.css" />
   </head>
   <body>
-    <div class="page-header">
+
+    <div class="page-topic">
+      
       <div class="back-button">
         <a href="./index.html"><img src="./img/home.png" alt="" /></a>
       </div>
 
+      <div class="page-title"><h3>Self-Adaptive NILM Model</h3></div>
+    
+    </div>
+
+
+    <div class="page-header">
       <form>
         <div class="device-time-selection">
           <div class="form-input">
@@ -55,7 +63,6 @@
     <!-- <div class="graph" id="aggregate-chart">Please submit above info</div>
     <div class="graph" id="device-chart"></div> -->
 
-
     <div class="graph-container">
       <div class="graph-summery" id="aggregate-chart-summery"></div>
       <div class="graph" id="aggregate-chart">Please submit above info</div>
@@ -63,9 +70,10 @@
 
     <div class="graph-container">
       <div class="graph-summery" id="device-chart-summery"></div>
-      <div class="graph" id="device-chart"></div>
+      <div class="graph" id="device-chart">
+        <img src="./img/corrupted-file.png" alt="" class="no-data-image" />
+      </div>
     </div>
-  
 
     <script src="./scripts/self-adaptive.js"></script>
     <script src="./scripts/plot-device-charts.js"></script>
