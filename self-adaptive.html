@@ -3,20 +3,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
     <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
-    <script
-      type="text/javascript"
-      src="./scripts/plot-charts.js"
-      defer
-    ></script>
+
     <link rel="stylesheet" href="./styles/self-adaptive.css" />
+    <link rel="stylesheet" href="./styles/graph.css" />
   </head>
   <body>
     <div class="page-header">
-      <div class="back-button"><a href="./index.html"><img src="./img/home.png" alt=""></a></div>
+      <div class="back-button">
+        <a href="./index.html"><img src="./img/home.png" alt="" /></a>
+      </div>
 
       <form>
         <div class="device-time-selection">
@@ -28,6 +28,11 @@
               <option value="washing-machine">Washing Machine</option>
               <option value="dish-washer">Dish Washer</option>
             </select>
+          </div>
+
+          <div class="form-input">
+            <label>Year :</label>
+            <input id="year" type="number" min="0" step="1" />
           </div>
 
           <div class="form-input">
@@ -47,7 +52,12 @@
       </form>
     </div>
 
-    <div class="graph" id="line_top_x"></div>
+    <div class="graph" id="aggregate-chart"></div>
+    <div class="graph" id="device-chart"></div>
+  
+
     <script src="./scripts/self-adaptive.js"></script>
+    <script src="./scripts/plot-device-charts.js"></script>
+    <script src="./scripts/plot-aggregate.js"></script>
   </body>
 </html>
