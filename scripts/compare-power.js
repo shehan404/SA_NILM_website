@@ -1,7 +1,33 @@
-
 // google.charts.setOnLoadCallback(drawChart);
 
-const deviceList = ["fridge", "washing_machine","fake"];
+const deviceList = ["fridge"]; //add devices to this array
+
+let formData = {
+  year: 0,
+  from: 0,
+  to: 0,
+};
+
+function submitForm() {
+  // Get form data
+  formData = {
+    year: document.getElementById("year").value,
+    from: document.getElementById("from").value,
+    to: document.getElementById("to").value,
+  };
+
+  // You can perform further operations here such as validation or AJAX submission
+
+  // For demonstration, just log the form data
+  // console.log(formData['from'],formData['to'],formData['device']);
+  plotDeviceEnergyUsage(
+    deviceList,
+    parseInt(formData["from"]),
+    parseInt(formData["to"]),
+    parseInt(formData["year"])
+  );
+  // fetchDataAndDrawChart(1000, 5000, "fridge", 3);
+}
 
 function fetchDeviceData(url) {
   return fetch(url)
@@ -16,30 +42,40 @@ function fetchDeviceData(url) {
     });
 }
 
-laodDeviceEnergyUsage(deviceList, 1000, 3000,3);
-
-function laodDeviceEnergyUsage(deviceList, startIndex, endIndex,year) {
+function plotDeviceEnergyUsage(deviceList, startIndex, endIndex, year) {
   let fileUrls = [];
   for (let device of deviceList) {
     let newUrl = `../data/${year}_th_year_${device}_prediction.json`;
     fileUrls.push(newUrl);
   }
 
-  console.log(fileUrls);
+  const aggregateUrl = `../data/${year}_th_year_aggregated_power.json`;
+  fileUrls.push(aggregateUrl);
+
+  //console.log(fileUrls);
 
   let loadedDeviceData = [];
-  console.log(startIndex, endIndex, fileUrls);
+  //console.log(startIndex, endIndex, fileUrls);
 
   let fetchPromises = []; // Array to store promises for each fetch operation
 
   for (let url of fileUrls) {
-    console.log("hi0");
+    //console.log("hi0");
     // Push the promise returned by fetchData into the fetchPromises array
     fetchPromises.push(
       fetchDeviceData(url).then((fetchedData) => {
-        let slicedElements = fetchedData.slice(startIndex, endIndex);
-        loadedDeviceData.push(slicedElements);
-        console.log("hi1");
+        // console.log(fetchedData);
+        if (fetchedData.length === 3) {
+          const slicedAggregate = fetchedData.map((element) =>
+            element.slice(startIndex, endIndex)
+          );
+          // console.log(slicedAggregate);
+          loadedDeviceData.push(slicedAggregate);
+        } else {
+          let slicedElements = fetchedData.slice(startIndex, endIndex);
+          loadedDeviceData.push(slicedElements);
+          //console.log("hi1");
+        }
       })
     );
   }
@@ -47,9 +83,10 @@ function laodDeviceEnergyUsage(deviceList, startIndex, endIndex,year) {
   // Wait for all fetch operations to complete
   Promise.all(fetchPromises)
     .then(() => {
-      console.log("hi2");
+      //console.log("hi2");
       ///////////output is here
-      console.log("about to send");
+      //console.log("about to send");
+
       takeDataToOutSide(loadedDeviceData);
     })
     .catch((error) => {
@@ -61,46 +98,77 @@ function laodDeviceEnergyUsage(deviceList, startIndex, endIndex,year) {
 
 function takeDataToOutSide(dataObtained) {
   // console.log(dataObtained)
+  //console.log(dataObtained);
   calculateEnergyUsage(dataObtained);
 }
 
 function calculateEnergyUsage(dataToFindArea) {
-  console.log(dataToFindArea);
+  //console.log(dataToFindArea);
   let lotalPowerValues = [];
   for (let data of dataToFindArea) {
-    const EnergyArray = data.map((element) => element * 6);
-    const accumulatedEnergy =
-      EnergyArray.reduce(
-        (accumulator, currentValue) => accumulator + currentValue,
-        0
-      ) /
-      (3600 * 1000)*3;
+    if (data.length === 3) {
+      let phaseEnergy = 0;
+      for (let i = 0; i < 3; i++) {
+        // console.log('hear bitch')
+        const phaseEnergyArray = data[i].map((element) => element * 6);
+        const accumPhase =
+          phaseEnergyArray.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+          ) /
+          (3600 * 1000);
+        // console.log(accumPhase)
+        phaseEnergy += accumPhase;
+      }
+      // console.log('accumephse', phaseEnergy)
+      lotalPowerValues.push(phaseEnergy);
+    } else {
+      const EnergyArray = data.map((element) => element * 6);
+      const accumulatedEnergy =
+        (EnergyArray.reduce(
+          (accumulator, currentValue) => accumulator + currentValue,
+          0
+        ) /
+          (3600 * 1000)) *
+        3;
 
-    lotalPowerValues.push(accumulatedEnergy);
+      lotalPowerValues.push(accumulatedEnergy);
+    }
   }
-  console.log(lotalPowerValues);
+  //console.log(lotalPowerValues);
 
   makeTable(lotalPowerValues, deviceList);
 }
 
-
 function makeTable(lotalPowerValues, deviceList) {
-  console.log(deviceList);
+  //console.log(deviceList);
   const tableOfData = [["Device", "Energy Usage (kWh)"]];
-  for (let i = 0; i < deviceList.length; i++) {
-    let datapoint = [`${deviceList[i]}`, parseInt(lotalPowerValues[i])];
-    tableOfData.push(datapoint);
+  for (let i = 0; i < deviceList.length + 1; i++) {
+    if (i === deviceList.length) {
+      const totalOfDevices = lotalPowerValues.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
+      const datapoint = [
+        "Other loads",
+        parseInt(2 * lotalPowerValues[i] - totalOfDevices),
+      ];
+      tableOfData.push(datapoint);
+    } else {
+      const datapoint = [`${deviceList[i]}`, parseInt(lotalPowerValues[i])];
+      tableOfData.push(datapoint);
+    }
   }
   drawChart(tableOfData);
 }
 
 google.charts.load("current", { packages: ["corechart"] });
 function drawChart(tableOfData) {
-  console.log(tableOfData);
+  //console.log(tableOfData);
   var data = google.visualization.arrayToDataTable(tableOfData);
 
   var options = {
-    title: "My Daily Activities",
+    title: "Energy Consumption Comparison",
   };
 
   var chart = new google.visualization.PieChart(

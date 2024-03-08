@@ -1,0 +1,24 @@
+.graph {
+  display: flex;
+  justify-content: center;
+  /* border: 2px solid rgb(174, 174, 174);  */
+}
+
+.pie-chart-container {
+  border: 1px solid rgb(188, 188, 188);
+  /* padding: 30px 15px 30px 20px; */
+  /* padding-right: 40px; */
+  margin-bottom: 20px;
+  margin-left: 150px;
+  border-radius: 8px;
+  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); */
+  display: flex;
+  justify-content: center;
+  
+  transition: box-shadow 0.3s ease;
+  width: 80vw; 
+}
+
+.pie-chart-container:hover {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+}

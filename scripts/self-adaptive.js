@@ -27,4 +27,4 @@ function submitForm() {
 }
 
 // window.formData = formData;
-window.submitForm = submitForm;
+// window.submitForm = submitForm;
