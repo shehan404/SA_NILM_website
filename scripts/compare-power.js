@@ -43,13 +43,21 @@ function fetchDeviceData(url) {
 }
 
 function plotDeviceEnergyUsage(deviceList, startIndex, endIndex, year) {
+
+  if (year <11) {
+    const enteredDataSummmery = document.getElementById(
+      "submited-data-container"
+    );
+    enteredDataSummmery.innerHTML = `<div class="submited-data"><p>Year <span class="energy-usage-value">${year}</span> data &nbsp;from <span class="energy-usage-value">${startIndex}</span> to <span class="energy-usage-value">${endIndex}</span></p></div>`;
+  }
+
   let fileUrls = [];
   for (let device of deviceList) {
-    let newUrl = `../data/${year}_th_year_${device}_prediction.json`;
+    let newUrl = `../data/SelfAdaptive_prediction/${year}_th_year_${device}_prediction.json`;
     fileUrls.push(newUrl);
   }
 
-  const aggregateUrl = `../data/${year}_th_year_aggregated_power.json`;
+  const aggregateUrl = `../data/aggregated_power/${year}_th_year_aggregated_power.json`;
   fileUrls.push(aggregateUrl);
 
   //console.log(fileUrls);
@@ -169,6 +177,7 @@ function drawChart(tableOfData) {
 
   var options = {
     title: "Energy Consumption Comparison",
+    legend: { position: 'right', alignment: 'center' }
   };
 
   var chart = new google.visualization.PieChart(

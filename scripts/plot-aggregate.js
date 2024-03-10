@@ -15,7 +15,7 @@ function fetchAggregatedData(url) {
 
 function fetchDataAndDrawAggregatedChart(startIndex, endIndex, year,device) {
   let phasesOfAggregated = [];
-  let fileUrl = `../data/${year}_th_year_aggregated_power.json`;
+  let fileUrl = `../data/aggregated_power/${year}_th_year_aggregated_power.json`;
   console.log(startIndex, endIndex, fileUrl);
 
   let fetchPromisesAgg = []; // Array to store promises for each fetch operation
@@ -87,6 +87,7 @@ function drawAggregateChart(dataToPlot, startIndex, device) {
     // chart: {
     //   title: `Aggregated power`,
     // },
+    legend: { position: 'right', alignment: 'center' },
     width: 1400,
     height: 400,
     axes: {
@@ -103,7 +104,6 @@ function drawAggregateChart(dataToPlot, startIndex, device) {
       title: "Power (W)",
       slantedText: false,
     },
-    legend: { position: "bottom" },
   };
 
   var chartAgg = new google.charts.Line(

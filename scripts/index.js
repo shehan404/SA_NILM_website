@@ -1,8 +1,8 @@
-document
-  .getElementById("total-power-card-button")
-  .addEventListener("click", function () {
-    window.location.href = "../total-power.html"; // Change this URL to the one you want to open
-  });
+// document
+//   .getElementById("total-power-card-button")
+//   .addEventListener("click", function () {
+//     window.location.href = "../total-power.html"; // Change this URL to the one you want to open
+//   });
 
 document
   .getElementById("compare-power-button")

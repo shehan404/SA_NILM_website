@@ -1,7 +1,5 @@
 // fetchDataAndDrawDeviceChart(1000, 2000, "fridge", 3);
 
-
-
 function fetchDeviceData(url) {
   return fetch(url)
     .then((response) => {
@@ -15,12 +13,36 @@ function fetchDeviceData(url) {
     });
 }
 
-function fetchDataAndDrawDeviceChart(startIndex, endIndex, device, year) {
+function fetchDataAndDrawDeviceChart(
+  startIndex,
+  endIndex,
+  device,
+  year,
+  selfAdaptiveOrNilm
+) {
+  if (year <11) {
+    const enteredDataSummmery = document.getElementById(
+      "submited-data-container"
+    );
+    enteredDataSummmery.innerHTML = `<div class="submited-data"><p>Year <span class="energy-usage-value">${year}</span> data of &nbsp;<span class="energy-usage-value">${device}</span> &nbsp;from <span class="energy-usage-value">${startIndex}</span> to <span class="energy-usage-value">${endIndex}</span></p></div>`;
+  }
+
   let targetAndPredictions = [];
+  let dataFile = "";
+  console.log(selfAdaptiveOrNilm);
+  if (selfAdaptiveOrNilm === "nilm") {
+    dataFile = "NILM_prediction";
+    console.log("i am", dataFile);
+  } else if (selfAdaptiveOrNilm === "selfAdaptive") {
+    dataFile = "SelfAdaptive_prediction";
+    console.log("i am", dataFile);
+  }
+
   let fileUrls = [
-    `../data/${year}_th_year_${device}_target.json`,
-    `../data/${year}_th_year_${device}_prediction.json`,
+    `../data/target/${year}_th_year_${device}_target.json`,
+    `../data/${dataFile}/${year}_th_year_${device}_prediction.json`,
   ]; //be carefull with order
+
   console.log(startIndex, endIndex, fileUrls);
 
   let fetchPromises = []; // Array to store promises for each fetch operation
@@ -66,9 +88,14 @@ function calculateGraphArea(dataArray) {
     ) /
     (3600 * 1000);
 
-  const usageAccuracy =  100-Math.abs(((PredictedUsage-tragetUsage)/tragetUsage)*100);  //ACT-PRED/ACT
+  const usageAccuracy =
+    100 - Math.abs(((PredictedUsage - tragetUsage) / tragetUsage) * 100); //ACT-PRED/ACT
 
-  return [tragetUsage.toFixed(4), PredictedUsage.toFixed(4), usageAccuracy.toFixed(2)];
+  return [
+    tragetUsage.toFixed(4),
+    PredictedUsage.toFixed(4),
+    usageAccuracy.toFixed(2),
+  ];
 }
 
 function mapDeviceDataToPlot(arrayOfData, startIndex) {
@@ -106,6 +133,7 @@ function drawDeviceChart(dataToPlot, startIndex, device) {
     // chart: {
     //   title: `Power consumption of ${device}`,
     // },
+    legend: { position: "right", alignment: "center" },
     width: 1400,
     height: 400,
     axes: {
@@ -122,13 +150,13 @@ function drawDeviceChart(dataToPlot, startIndex, device) {
       title: "Power (W)",
       slantedText: false,
     },
-    legend: { position: "bottom" },
   };
 
   var chart = new google.charts.Line(document.getElementById("device-chart"));
   chart.draw(data, google.charts.Line.convertOptions(options));
 
-  const [targetUsage, PredictedUsage, usageAccuracy] = calculateGraphArea(dataToPlot);
+  const [targetUsage, PredictedUsage, usageAccuracy] =
+    calculateGraphArea(dataToPlot);
   console.log(targetUsage, PredictedUsage);
   const chartSummery = document.getElementById("device-chart-summery");
   const summetyContent = `<div class="chart-title">Power consumption of ${device}</div>
@@ -137,7 +165,6 @@ function drawDeviceChart(dataToPlot, startIndex, device) {
   <div class="energy-usage" >Predicted Energy Usage: <span class="energy-usage-value">${PredictedUsage}</span> kWh</div>
   <div class="energy-usage" >Accuracy: <span class="energy-usage-value">${usageAccuracy}</span> %</div>
   </div>`;
-
   chartSummery.innerHTML = summetyContent;
 }
 

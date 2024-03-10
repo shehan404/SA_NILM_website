@@ -4,7 +4,7 @@ let formData ={
   to: 0
 }
 
-function submitForm() {
+function submitForm(typeOfModel) {
   // Get form data
   formData = {
       device: document.getElementById("device").value,
@@ -20,7 +20,7 @@ function submitForm() {
   // For demonstration, just log the form data
   // console.log(formData['from'],formData['to'],formData['device']);
   fetchDataAndDrawAggregatedChart(parseInt(formData['from']),parseInt(formData['to']), parseInt(formData['year']),formData['device']);
-  fetchDataAndDrawDeviceChart(parseInt(formData['from']),parseInt(formData['to']),formData['device'],parseInt(formData['year']));
+  fetchDataAndDrawDeviceChart(parseInt(formData['from']),parseInt(formData['to']),formData['device'],parseInt(formData['year']),typeOfModel);
   
   // fetchDataAndDrawChart(1000, 5000, "fridge", 3);
   
